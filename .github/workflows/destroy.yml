@@ -3,10 +3,14 @@ name: pulumi-destroy
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write     # ⭐ REQUIRED for GitHub → IAM OIDC
+  contents: read
+
 jobs:
   destroy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,10 +24,10 @@ jobs:
         working-directory: ./ppinfra
         run: npm install
 
-      - name: Install Pulumi Plugins
+      - name: Install Pulumi AWS Plugin 6.72.0
         run: pulumi plugin install resource aws 6.72.0
 
-      - name: Pulumi Destroy using ESC
+      - name: Pulumi Destroy using ESC + OIDC
         uses: pulumi/actions@v5
         with:
           command: destroy
@@ -31,4 +35,4 @@ jobs:
           work-dir: ./ppinfra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_ENV: aws-oidc-env
+          PULUMI_ENV: aws-oidc-env   # tells Pulumi to use ESC environment
