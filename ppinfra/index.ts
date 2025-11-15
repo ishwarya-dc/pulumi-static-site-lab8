@@ -2,52 +2,52 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as synced_folder from "@pulumi/synced-folder";
 
-// ⭐ NEW: Configure AWS provider to use ESC OIDC credentials
+// ⭐ ESC OIDC AWS Provider – this will use the role assumed via GitHub OIDC
 const escAwsProvider = new aws.Provider("escAwsProvider", {
-    region: "us-east-1",   // DO NOT use aws.config.region here
+    region: "us-east-1",
 });
 
-// ⭐ Set this as the default AWS provider for ALL resources
-pulumi.runtime.setProvider("aws::default", escAwsProvider);
-
-// Import the program's configuration settings.
+// ⭐ Configuration settings
 const config = new pulumi.Config();
 const path = config.get("path") || "./www";
 const indexDocument = config.get("indexDocument") || "index.html";
 const errorDocument = config.get("errorDocument") || "error.html";
 
+// ⭐ S3 Bucket
+const bucket = new aws.s3.BucketV2("bucket", {}, { provider: escAwsProvider });
 
-// Create an S3 bucket and configure it as a website.
-const bucket = new aws.s3.BucketV2("bucket");
-
+// ⭐ S3 Website config
 const bucketWebsite = new aws.s3.BucketWebsiteConfigurationV2("bucketWebsite", {
     bucket: bucket.bucket,
-    indexDocument: {suffix: indexDocument},
-    errorDocument: {key: errorDocument},
-});
+    indexDocument: { suffix: indexDocument },
+    errorDocument: { key: errorDocument },
+}, { provider: escAwsProvider });
 
-// Configure ownership controls for the new S3 bucket
+// ⭐ Ownership controls
 const ownershipControls = new aws.s3.BucketOwnershipControls("ownership-controls", {
     bucket: bucket.bucket,
     rule: {
         objectOwnership: "ObjectWriter",
     },
-});
+}, { provider: escAwsProvider });
 
-// Configure public ACL block on the new S3 bucket
+// ⭐ Public access block
 const publicAccessBlock = new aws.s3.BucketPublicAccessBlock("public-access-block", {
     bucket: bucket.bucket,
     blockPublicAcls: false,
-});
+}, { provider: escAwsProvider });
 
-// Use a synced folder to manage the files of the website.
+// ⭐ Synced folder (uploads static site)
 const bucketFolder = new synced_folder.S3BucketFolder("bucket-folder", {
     path: path,
     bucketName: bucket.bucket,
     acl: "public-read",
-}, { dependsOn: [ownershipControls, publicAccessBlock]});
+}, { 
+    dependsOn: [ownershipControls, publicAccessBlock],
+    provider: escAwsProvider
+});
 
-// Create a CloudFront CDN to distribute and cache the website.
+// ⭐ CloudFront CDN
 const cdn = new aws.cloudfront.Distribution("cdn", {
     enabled: true,
     origins: [{
@@ -63,24 +63,14 @@ const cdn = new aws.cloudfront.Distribution("cdn", {
     defaultCacheBehavior: {
         targetOriginId: bucket.arn,
         viewerProtocolPolicy: "redirect-to-https",
-        allowedMethods: [
-            "GET",
-            "HEAD",
-            "OPTIONS",
-        ],
-        cachedMethods: [
-            "GET",
-            "HEAD",
-            "OPTIONS",
-        ],
+        allowedMethods: ["GET", "HEAD", "OPTIONS"],
+        cachedMethods: ["GET", "HEAD", "OPTIONS"],
         defaultTtl: 600,
         maxTtl: 600,
         minTtl: 600,
         forwardedValues: {
             queryString: true,
-            cookies: {
-                forward: "all",
-            },
+            cookies: { forward: "all" },
         },
     },
     priceClass: "PriceClass_100",
@@ -97,10 +87,11 @@ const cdn = new aws.cloudfront.Distribution("cdn", {
     viewerCertificate: {
         cloudfrontDefaultCertificate: true,
     },
-});
+}, { provider: escAwsProvider });
 
-// Export the URLs and hostnames of the bucket and distribution.
+// ⭐ Export URLs
 export const originURL = pulumi.interpolate`http://${bucketWebsite.websiteEndpoint}`;
 export const originHostname = bucketWebsite.websiteEndpoint;
 export const cdnURL = pulumi.interpolate`https://${cdn.domainName}`;
 export const cdnHostname = cdn.domainName;
+
