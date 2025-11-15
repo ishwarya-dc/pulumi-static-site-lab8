@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
+  id-token: write       # REQUIRED for GitHub OIDC
   contents: read
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -35,13 +35,14 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Use ESC environment
+      # ⭐ THE MISSING STEP ⭐
+      - name: Activate ESC environment
         working-directory: ./ppinfra
-        run: pulumi config set --path pulumi:environment aws-oidc-env
+        run: pulumi env activate aws-oidc-env
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-      - name: Pulumi Destroy (OIDC + ESC)
+      - name: Pulumi Destroy
         working-directory: ./ppinfra
         run: pulumi destroy --yes --stack ishwarya-dc/myworkshop/dev
         env:
