@@ -3,47 +3,32 @@ name: pulumi-destroy
 on:
   workflow_dispatch:
 
-permissions:
-  id-token: write       # REQUIRED for GitHub OIDC
-  contents: read
-
 jobs:
   destroy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Set up Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install Dependencies
         working-directory: ./ppinfra
         run: npm install
 
-      - name: Pulumi Login
-        run: pulumi login
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: Install Pulumi Plugins
+        run: pulumi plugin install resource aws 6.72.0
 
-      - name: Select stack
-        working-directory: ./ppinfra
-        run: pulumi stack select ishwarya-dc/myworkshop/dev
+      - name: Pulumi Destroy using ESC
+        uses: pulumi/actions@v5
+        with:
+          command: destroy
+          stack-name: ishwarya-dc/myworkshop/dev
+          work-dir: ./ppinfra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-      # ⭐ THE MISSING STEP ⭐
-      - name: Activate ESC environment
-        working-directory: ./ppinfra
-        run: pulumi env activate aws-oidc-env
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-      - name: Pulumi Destroy
-        working-directory: ./ppinfra
-        run: pulumi destroy --yes --stack ishwarya-dc/myworkshop/dev
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ENV: aws-oidc-env
