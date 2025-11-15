@@ -2,11 +2,20 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as synced_folder from "@pulumi/synced-folder";
 
+// ⭐ NEW: Configure AWS provider to use ESC OIDC credentials
+const escAwsProvider = new aws.Provider("escAwsProvider", {
+    region: "us-east-1",   // DO NOT use aws.config.region here
+});
+
+// ⭐ Set this as the default AWS provider for ALL resources
+pulumi.runtime.setProvider("aws::default", escAwsProvider);
+
 // Import the program's configuration settings.
 const config = new pulumi.Config();
 const path = config.get("path") || "./www";
 const indexDocument = config.get("indexDocument") || "index.html";
 const errorDocument = config.get("errorDocument") || "error.html";
+
 
 // Create an S3 bucket and configure it as a website.
 const bucket = new aws.s3.BucketV2("bucket");
