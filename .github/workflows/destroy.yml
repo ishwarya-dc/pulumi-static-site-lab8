@@ -4,12 +4,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write     # ⭐ REQUIRED for GitHub → IAM OIDC
+  id-token: write
   contents: read
 
 jobs:
   destroy:
     runs-on: ubuntu-latest
+
+    env:
+      PULUMI_HOME: ~/.pulumi     # ⭐ Forces Pulumi to use correct plugin dir
 
     steps:
       - name: Checkout repository
@@ -24,10 +27,13 @@ jobs:
         working-directory: ./ppinfra
         run: npm install
 
-      - name: Install Pulumi AWS Plugin 6.72.0
-        run: pulumi plugin install resource aws 6.72.0
+      - name: Ensure Pulumi Home Exists
+        run: mkdir -p ~/.pulumi/plugins
 
-      - name: Pulumi Destroy using ESC + OIDC
+      - name: Install AWS Plugin 6.x in Pulumi Home
+        run: pulumi plugin install resource aws 6.83.2
+
+      - name: Destroy with Pulumi ESC + GitHub OIDC
         uses: pulumi/actions@v5
         with:
           command: destroy
@@ -35,4 +41,5 @@ jobs:
           work-dir: ./ppinfra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_ENV: aws-oidc-env   # tells Pulumi to use ESC environment
+          PULUMI_ENV: aws-oidc-env
+          AWS_REGION: us-east-1
