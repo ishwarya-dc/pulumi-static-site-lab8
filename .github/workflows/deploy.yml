@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Install Pulumi AWS Plugin
-        run: pulumi plugin install resource aws 6.72.0
+        run: pulumi plugin install resource aws 6.83.2
 
       - name: Pulumi Up using ESC (OIDC)
         uses: pulumi/actions@v5
@@ -38,4 +38,4 @@ jobs:
           work-dir: ./ppinfra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          PULUMI_ENV: aws-oidc-env
+          PULUMI_ENV: ishwarya-dc-org/lab8-pulumi/aws-oidc-env   # ✅ FIXED
