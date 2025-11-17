@@ -1,3 +1,4 @@
 config:
   aws:region: us-east-1
-  pulumi:environment: lab8-pulumi/aws-oidc-env
+  pulumi:environment: ishwarya-dc-org/lab8-pulumi/aws-oidc-env
+

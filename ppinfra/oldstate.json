@@ -1,0 +1,681 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2025-11-15T08:22:48.318752777Z",
+            "magic": "335b74c9420f926a641d094ac33db6d65cb2edd262e4fe090f71b915b3e0634d",
+            "version": "v3.206.0"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "ishwarya-dc",
+                "project": "myworkshop",
+                "stack": "dev"
+            }
+        },
+        "metadata": {},
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "cdnHostname": "d1ltineswlcz5o.cloudfront.net",
+                    "cdnURL": "https://d1ltineswlcz5o.cloudfront.net",
+                    "originHostname": "bucket-8a96575.s3-website-us-east-1.amazonaws.com",
+                    "originURL": "http://bucket-8a96575.s3-website-us-east-1.amazonaws.com"
+                },
+                "created": "2025-11-14T02:00:07.009861Z",
+                "modified": "2025-11-14T02:00:07.009861Z",
+                "sourcePosition": "project:///node_modules/@pulumi/runtime/stack.ts#38,23"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0",
+                "custom": true,
+                "id": "0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "__internal": {},
+                    "region": "us-east-1",
+                    "skipCredentialsValidation": "false",
+                    "skipRegionValidation": "true",
+                    "version": "6.72.0"
+                },
+                "outputs": {
+                    "region": "us-east-1",
+                    "skipCredentialsValidation": "false",
+                    "skipRegionValidation": "true",
+                    "version": "6.72.0"
+                },
+                "created": "2025-11-14T02:00:08.546053Z",
+                "modified": "2025-11-14T02:00:08.546053Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket",
+                "custom": true,
+                "id": "bucket-8a96575",
+                "type": "aws:s3/bucketV2:BucketV2",
+                "inputs": {
+                    "__defaults": [
+                        "bucket",
+                        "forceDestroy"
+                    ],
+                    "bucket": "bucket-8a96575",
+                    "forceDestroy": false
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1200000000000,\"delete\":3600000000000,\"read\":1200000000000,\"update\":1200000000000}}",
+                    "accelerationStatus": "",
+                    "acl": null,
+                    "arn": "arn:aws:s3:::bucket-8a96575",
+                    "bucket": "bucket-8a96575",
+                    "bucketDomainName": "bucket-8a96575.s3.amazonaws.com",
+                    "bucketPrefix": "",
+                    "bucketRegionalDomainName": "bucket-8a96575.s3.us-east-1.amazonaws.com",
+                    "corsRules": [],
+                    "forceDestroy": false,
+                    "grants": [
+                        {
+                            "id": "9ce63e701b5f3fa758f3bfa39e92d58573f7363e308291ab1f1c77412b3131e4",
+                            "permissions": [
+                                "FULL_CONTROL"
+                            ],
+                            "type": "CanonicalUser",
+                            "uri": ""
+                        }
+                    ],
+                    "hostedZoneId": "Z3AQBSTGFYJSTF",
+                    "id": "bucket-8a96575",
+                    "lifecycleRules": [],
+                    "loggings": [],
+                    "objectLockConfiguration": null,
+                    "objectLockEnabled": false,
+                    "policy": "",
+                    "region": "us-east-1",
+                    "replicationConfigurations": [],
+                    "requestPayer": "BucketOwner",
+                    "serverSideEncryptionConfigurations": [
+                        {
+                            "rules": [
+                                {
+                                    "applyServerSideEncryptionByDefaults": [
+                                        {
+                                            "kmsMasterKeyId": "",
+                                            "sseAlgorithm": "AES256"
+                                        }
+                                    ],
+                                    "bucketKeyEnabled": false
+                                }
+                            ]
+                        }
+                    ],
+                    "versionings": [
+                        {
+                            "enabled": false,
+                            "mfaDelete": false
+                        }
+                    ],
+                    "websiteDomain": null,
+                    "websiteEndpoint": null,
+                    "websites": []
+                },
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0::0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "created": "2025-11-14T02:00:14.409534Z",
+                "modified": "2025-11-14T02:00:14.409534Z",
+                "sourcePosition": "project:///index.ts#12,16"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::aws:s3/bucketWebsiteConfigurationV2:BucketWebsiteConfigurationV2::bucketWebsite",
+                "custom": true,
+                "id": "bucket-8a96575",
+                "type": "aws:s3/bucketWebsiteConfigurationV2:BucketWebsiteConfigurationV2",
+                "inputs": {
+                    "__defaults": [],
+                    "bucket": "bucket-8a96575",
+                    "errorDocument": {
+                        "__defaults": [],
+                        "key": "error.html"
+                    },
+                    "indexDocument": {
+                        "__defaults": [],
+                        "suffix": "index.html"
+                    }
+                },
+                "outputs": {
+                    "bucket": "bucket-8a96575",
+                    "errorDocument": {
+                        "key": "error.html"
+                    },
+                    "expectedBucketOwner": "",
+                    "id": "bucket-8a96575",
+                    "indexDocument": {
+                        "suffix": "index.html"
+                    },
+                    "redirectAllRequestsTo": null,
+                    "routingRuleDetails": "",
+                    "routingRules": [],
+                    "websiteDomain": "s3-website-us-east-1.amazonaws.com",
+                    "websiteEndpoint": "bucket-8a96575.s3-website-us-east-1.amazonaws.com"
+                },
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0::0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ],
+                    "errorDocument": [],
+                    "indexDocument": []
+                },
+                "created": "2025-11-14T02:00:15.497849Z",
+                "modified": "2025-11-14T02:00:15.497849Z",
+                "sourcePosition": "project:///index.ts#14,23"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::aws:s3/bucketOwnershipControls:BucketOwnershipControls::ownership-controls",
+                "custom": true,
+                "id": "bucket-8a96575",
+                "type": "aws:s3/bucketOwnershipControls:BucketOwnershipControls",
+                "inputs": {
+                    "__defaults": [],
+                    "bucket": "bucket-8a96575",
+                    "rule": {
+                        "__defaults": [],
+                        "objectOwnership": "ObjectWriter"
+                    }
+                },
+                "outputs": {
+                    "bucket": "bucket-8a96575",
+                    "id": "bucket-8a96575",
+                    "rule": {
+                        "objectOwnership": "ObjectWriter"
+                    }
+                },
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0::0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ],
+                    "rule": []
+                },
+                "created": "2025-11-14T02:00:15.321589Z",
+                "modified": "2025-11-14T02:00:15.321589Z",
+                "sourcePosition": "project:///index.ts#21,27"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::aws:cloudfront/distribution:Distribution::cdn",
+                "custom": true,
+                "id": "E2GWEKORV3PA36",
+                "type": "aws:cloudfront/distribution:Distribution",
+                "inputs": {
+                    "__defaults": [
+                        "httpVersion",
+                        "isIpv6Enabled",
+                        "retainOnDelete",
+                        "staging",
+                        "waitForDeployment"
+                    ],
+                    "customErrorResponses": [
+                        {
+                            "__defaults": [],
+                            "errorCode": 404,
+                            "responseCode": 404,
+                            "responsePagePath": "/error.html"
+                        }
+                    ],
+                    "defaultCacheBehavior": {
+                        "__defaults": [
+                            "compress"
+                        ],
+                        "allowedMethods": [
+                            "GET",
+                            "HEAD",
+                            "OPTIONS"
+                        ],
+                        "cachedMethods": [
+                            "GET",
+                            "HEAD",
+                            "OPTIONS"
+                        ],
+                        "compress": false,
+                        "defaultTtl": 600,
+                        "forwardedValues": {
+                            "__defaults": [],
+                            "cookies": {
+                                "__defaults": [],
+                                "forward": "all"
+                            },
+                            "queryString": true
+                        },
+                        "maxTtl": 600,
+                        "minTtl": 600,
+                        "targetOriginId": "arn:aws:s3:::bucket-8a96575",
+                        "viewerProtocolPolicy": "redirect-to-https"
+                    },
+                    "enabled": true,
+                    "httpVersion": "http2",
+                    "isIpv6Enabled": false,
+                    "origins": [
+                        {
+                            "__defaults": [
+                                "connectionAttempts",
+                                "connectionTimeout",
+                                "originPath"
+                            ],
+                            "connectionAttempts": 3,
+                            "connectionTimeout": 10,
+                            "customOriginConfig": {
+                                "__defaults": [
+                                    "originKeepaliveTimeout",
+                                    "originReadTimeout"
+                                ],
+                                "httpPort": 80,
+                                "httpsPort": 443,
+                                "originKeepaliveTimeout": 5,
+                                "originProtocolPolicy": "http-only",
+                                "originReadTimeout": 30,
+                                "originSslProtocols": [
+                                    "TLSv1.2"
+                                ]
+                            },
+                            "domainName": "bucket-8a96575.s3-website-us-east-1.amazonaws.com",
+                            "originId": "arn:aws:s3:::bucket-8a96575",
+                            "originPath": ""
+                        }
+                    ],
+                    "priceClass": "PriceClass_100",
+                    "restrictions": {
+                        "__defaults": [],
+                        "geoRestriction": {
+                            "__defaults": [],
+                            "restrictionType": "none"
+                        }
+                    },
+                    "retainOnDelete": false,
+                    "staging": false,
+                    "viewerCertificate": {
+                        "__defaults": [
+                            "minimumProtocolVersion"
+                        ],
+                        "cloudfrontDefaultCertificate": true,
+                        "minimumProtocolVersion": "TLSv1"
+                    },
+                    "waitForDeployment": true
+                },
+                "outputs": {
+                    "__meta": "{\"schema_version\":\"1\"}",
+                    "aliases": null,
+                    "arn": "arn:aws:cloudfront::379694498501:distribution/E2GWEKORV3PA36",
+                    "callerReference": "terraform-20251114020016462100000001",
+                    "comment": null,
+                    "continuousDeploymentPolicyId": "",
+                    "customErrorResponses": [
+                        {
+                            "errorCachingMinTtl": null,
+                            "errorCode": 404,
+                            "responseCode": 404,
+                            "responsePagePath": "/error.html"
+                        }
+                    ],
+                    "defaultCacheBehavior": {
+                        "allowedMethods": [
+                            "GET",
+                            "HEAD",
+                            "OPTIONS"
+                        ],
+                        "cachePolicyId": "",
+                        "cachedMethods": [
+                            "GET",
+                            "HEAD",
+                            "OPTIONS"
+                        ],
+                        "compress": false,
+                        "defaultTtl": 600,
+                        "fieldLevelEncryptionId": "",
+                        "forwardedValues": {
+                            "cookies": {
+                                "forward": "all",
+                                "whitelistedNames": []
+                            },
+                            "headers": [],
+                            "queryString": true,
+                            "queryStringCacheKeys": []
+                        },
+                        "functionAssociations": [],
+                        "grpcConfig": {
+                            "enabled": false
+                        },
+                        "lambdaFunctionAssociations": [],
+                        "maxTtl": 600,
+                        "minTtl": 600,
+                        "originRequestPolicyId": "",
+                        "realtimeLogConfigArn": "",
+                        "responseHeadersPolicyId": "",
+                        "smoothStreaming": false,
+                        "targetOriginId": "arn:aws:s3:::bucket-8a96575",
+                        "trustedKeyGroups": [],
+                        "trustedSigners": [],
+                        "viewerProtocolPolicy": "redirect-to-https"
+                    },
+                    "defaultRootObject": "",
+                    "domainName": "d1ltineswlcz5o.cloudfront.net",
+                    "enabled": true,
+                    "etag": "E26IGZMLMHOVV8",
+                    "hostedZoneId": "Z2FDTNDATAQYW2",
+                    "httpVersion": "http2",
+                    "id": "E2GWEKORV3PA36",
+                    "inProgressValidationBatches": 0,
+                    "isIpv6Enabled": false,
+                    "lastModifiedTime": "2025-11-14 02:00:16.745 +0000 UTC",
+                    "loggingConfig": null,
+                    "orderedCacheBehaviors": [],
+                    "originGroups": [],
+                    "origins": [
+                        {
+                            "connectionAttempts": 3,
+                            "connectionTimeout": 10,
+                            "customHeaders": [],
+                            "customOriginConfig": {
+                                "httpPort": 80,
+                                "httpsPort": 443,
+                                "originKeepaliveTimeout": 5,
+                                "originProtocolPolicy": "http-only",
+                                "originReadTimeout": 30,
+                                "originSslProtocols": [
+                                    "TLSv1.2"
+                                ]
+                            },
+                            "domainName": "bucket-8a96575.s3-website-us-east-1.amazonaws.com",
+                            "originAccessControlId": "",
+                            "originId": "arn:aws:s3:::bucket-8a96575",
+                            "originPath": "",
+                            "originShield": null,
+                            "s3OriginConfig": null,
+                            "vpcOriginConfig": null
+                        }
+                    ],
+                    "priceClass": "PriceClass_100",
+                    "restrictions": {
+                        "geoRestriction": {
+                            "locations": [],
+                            "restrictionType": "none"
+                        }
+                    },
+                    "retainOnDelete": false,
+                    "staging": false,
+                    "status": "Deployed",
+                    "trustedKeyGroups": [
+                        {
+                            "enabled": false,
+                            "items": []
+                        }
+                    ],
+                    "trustedSigners": [
+                        {
+                            "enabled": false,
+                            "items": []
+                        }
+                    ],
+                    "viewerCertificate": {
+                        "acmCertificateArn": "",
+                        "cloudfrontDefaultCertificate": true,
+                        "iamCertificateId": "",
+                        "minimumProtocolVersion": "TLSv1",
+                        "sslSupportMethod": ""
+                    },
+                    "waitForDeployment": true,
+                    "webAclId": ""
+                },
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket",
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketWebsiteConfigurationV2:BucketWebsiteConfigurationV2::bucketWebsite"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0::0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "propertyDependencies": {
+                    "customErrorResponses": [],
+                    "defaultCacheBehavior": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ],
+                    "enabled": [],
+                    "origins": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket",
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketWebsiteConfigurationV2:BucketWebsiteConfigurationV2::bucketWebsite"
+                    ],
+                    "priceClass": [],
+                    "restrictions": [],
+                    "viewerCertificate": []
+                },
+                "created": "2025-11-14T02:09:12.413529Z",
+                "modified": "2025-11-14T02:09:12.413529Z",
+                "sourcePosition": "project:///index.ts#42,13"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::aws:s3/bucketPublicAccessBlock:BucketPublicAccessBlock::public-access-block",
+                "custom": true,
+                "id": "bucket-8a96575",
+                "type": "aws:s3/bucketPublicAccessBlock:BucketPublicAccessBlock",
+                "inputs": {
+                    "__defaults": [
+                        "blockPublicPolicy",
+                        "ignorePublicAcls",
+                        "restrictPublicBuckets"
+                    ],
+                    "blockPublicAcls": false,
+                    "blockPublicPolicy": false,
+                    "bucket": "bucket-8a96575",
+                    "ignorePublicAcls": false,
+                    "restrictPublicBuckets": false
+                },
+                "outputs": {
+                    "blockPublicAcls": false,
+                    "blockPublicPolicy": false,
+                    "bucket": "bucket-8a96575",
+                    "id": "bucket-8a96575",
+                    "ignorePublicAcls": false,
+                    "restrictPublicBuckets": false
+                },
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_6_72_0::0c967cfa-1493-42e4-aa00-b11db34cce19",
+                "propertyDependencies": {
+                    "blockPublicAcls": [],
+                    "bucket": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ]
+                },
+                "created": "2025-11-14T02:00:15.366445Z",
+                "modified": "2025-11-15T06:38:26.849551Z",
+                "sourcePosition": "project:///index.ts#29,27"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::pulumi:providers:synced-folder::default_0_0_9",
+                "custom": true,
+                "id": "d64b7f05-7f66-48b0-bd77-b928819009dc",
+                "type": "pulumi:providers:synced-folder",
+                "inputs": {
+                    "__internal": {},
+                    "version": "0.0.9"
+                },
+                "outputs": {
+                    "version": "0.0.9"
+                },
+                "created": "2025-11-14T02:00:16.052827Z",
+                "modified": "2025-11-14T02:00:16.052827Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::synced-folder:index:S3BucketFolder::bucket-folder",
+                "custom": false,
+                "type": "synced-folder:index:S3BucketFolder",
+                "parent": "urn:pulumi:dev::myworkshop::pulumi:pulumi:Stack::myworkshop-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketOwnershipControls:BucketOwnershipControls::ownership-controls",
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketPublicAccessBlock:BucketPublicAccessBlock::public-access-block",
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "created": "2025-11-14T02:00:16.629934Z",
+                "modified": "2025-11-14T02:00:16.629934Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_5_23_0",
+                "custom": true,
+                "id": "eff8b2e8-e1dd-4048-b5db-3f76e1291d3f",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "__internal": {},
+                    "region": "us-east-1",
+                    "version": "5.23.0"
+                },
+                "outputs": {
+                    "region": "us-east-1",
+                    "version": "5.23.0"
+                },
+                "created": "2025-11-14T02:00:17.2503Z",
+                "modified": "2025-11-14T02:00:17.2503Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::synced-folder:index:S3BucketFolder$aws:s3/bucketObject:BucketObject::error.html",
+                "custom": true,
+                "id": "error.html",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "public-read",
+                    "bucket": "bucket-8a96575",
+                    "contentType": "text/html",
+                    "forceDestroy": false,
+                    "key": "error.html",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "2b01807fdd53c8d882a7df89fedb6764ea78c184559adc460c7df5daa67116e2",
+                        "path": "./www/error.html"
+                    }
+                },
+                "outputs": {
+                    "acl": "public-read",
+                    "bucket": "bucket-8a96575",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/html",
+                    "etag": "3be28f86d5fdf80646b5eefba4a9f9f9",
+                    "forceDestroy": false,
+                    "id": "error.html",
+                    "key": "error.html",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "AES256",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "2b01807fdd53c8d882a7df89fedb6764ea78c184559adc460c7df5daa67116e2",
+                        "path": "./www/error.html"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::myworkshop::synced-folder:index:S3BucketFolder::bucket-folder",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_5_23_0::eff8b2e8-e1dd-4048-b5db-3f76e1291d3f",
+                "propertyDependencies": {
+                    "acl": [],
+                    "bucket": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ],
+                    "contentType": [],
+                    "source": []
+                },
+                "created": "2025-11-14T02:00:18.008802Z",
+                "modified": "2025-11-14T02:00:18.008802Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::myworkshop::synced-folder:index:S3BucketFolder$aws:s3/bucketObject:BucketObject::index.html",
+                "custom": true,
+                "id": "index.html",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "public-read",
+                    "bucket": "bucket-8a96575",
+                    "contentType": "text/html",
+                    "forceDestroy": false,
+                    "key": "index.html",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "3c7565488e09ca1f8ae426019a250bd68401ab5f6ffa8d96d455f9b9a19b6a80",
+                        "path": "./www/index.html"
+                    }
+                },
+                "outputs": {
+                    "acl": "public-read",
+                    "bucket": "bucket-8a96575",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/html",
+                    "etag": "7840dd45d638a0d92de8c3bb2b0d3691",
+                    "forceDestroy": false,
+                    "id": "index.html",
+                    "key": "index.html",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "AES256",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "3c7565488e09ca1f8ae426019a250bd68401ab5f6ffa8d96d455f9b9a19b6a80",
+                        "path": "./www/index.html"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::myworkshop::synced-folder:index:S3BucketFolder::bucket-folder",
+                "dependencies": [
+                    "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                ],
+                "provider": "urn:pulumi:dev::myworkshop::pulumi:providers:aws::default_5_23_0::eff8b2e8-e1dd-4048-b5db-3f76e1291d3f",
+                "propertyDependencies": {
+                    "acl": [],
+                    "bucket": [
+                        "urn:pulumi:dev::myworkshop::aws:s3/bucketV2:BucketV2::bucket"
+                    ],
+                    "contentType": [],
+                    "source": []
+                },
+                "created": "2025-11-14T02:00:18.168683Z",
+                "modified": "2025-11-14T02:00:18.168683Z"
+            }
+        ]
+    }
+}
