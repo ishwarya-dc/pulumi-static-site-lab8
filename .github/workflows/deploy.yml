@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
         working-directory: ./ppinfra
         run: npm install
 
-      - name: Install Pulumi AWS Plugin (same version as local)
+      - name: Install Pulumi AWS Plugin
         run: pulumi plugin install resource aws 6.72.0
 
       - name: Pulumi Up using ESC (OIDC)
