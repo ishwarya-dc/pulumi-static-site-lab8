@@ -1,0 +1,37 @@
+name: pulumi-deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        working-directory: ./ppinfra
+        run: npm install
+
+      - name: Install Pulumi AWS Plugin (same version as local)
+        run: pulumi plugin install resource aws 6.72.0
+
+      - name: Pulumi Up using ESC (OIDC)
+        uses: pulumi/actions@v5
+        with:
+          command: up
+          stack-name: ishwarya-dc/myworkshop/dev
+          work-dir: ./ppinfra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ENV: aws-oidc-env
