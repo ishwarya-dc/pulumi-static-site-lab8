@@ -2,33 +2,31 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as synced_folder from "@pulumi/synced-folder";
 
-// -----------------------------------------------------------------------------
-// ⭐ ESC OIDC AWS Provider – GitHub Actions will supply AWS creds via OIDC
-// -----------------------------------------------------------------------------
+// --------------------------------------------------------
+// 1️⃣ Load ESC environment values
+// --------------------------------------------------------
+const esc = pulumi.env.get("aws")!;
+
+// --------------------------------------------------------
+// 2️⃣ Create AWS provider using ESC OIDC credentials
+// --------------------------------------------------------
 const escAwsProvider = new aws.Provider("escAwsProvider", {
-    region: "us-east-1",
+    region: esc.region,
 });
 
-// -----------------------------------------------------------------------------
-// ⭐ Read Pulumi config
-// -----------------------------------------------------------------------------
+// --------------------------------------------------------
+// 3️⃣ Load config for static website
+// --------------------------------------------------------
 const config = new pulumi.Config();
 const path = config.get("path") || "./www";
 const indexDocument = config.get("indexDocument") || "index.html";
 const errorDocument = config.get("errorDocument") || "error.html";
 
-// -----------------------------------------------------------------------------
-// ⭐ S3 Bucket
-// -----------------------------------------------------------------------------
-const bucket = new aws.s3.BucketV2(
-    "bucket",
-    {},
-    { provider: escAwsProvider }
-);
+// --------------------------------------------------------
+// 4️⃣ S3 Bucket
+// --------------------------------------------------------
+const bucket = new aws.s3.BucketV2("bucket", {}, { provider: escAwsProvider });
 
-// -----------------------------------------------------------------------------
-// ⭐ S3 Website Configuration
-// -----------------------------------------------------------------------------
 const bucketWebsite = new aws.s3.BucketWebsiteConfigurationV2(
     "bucketWebsite",
     {
@@ -39,11 +37,8 @@ const bucketWebsite = new aws.s3.BucketWebsiteConfigurationV2(
     { provider: escAwsProvider }
 );
 
-// -----------------------------------------------------------------------------
-// ⭐ S3 Ownership Controls
-// -----------------------------------------------------------------------------
 const ownershipControls = new aws.s3.BucketOwnershipControls(
-    "ownership-controls",
+    "ownershipControls",
     {
         bucket: bucket.bucket,
         rule: { objectOwnership: "ObjectWriter" },
@@ -51,23 +46,20 @@ const ownershipControls = new aws.s3.BucketOwnershipControls(
     { provider: escAwsProvider }
 );
 
-// -----------------------------------------------------------------------------
-// ⭐ Public Access Block
-// -----------------------------------------------------------------------------
 const publicAccessBlock = new aws.s3.BucketPublicAccessBlock(
-    "public-access-block",
+    "publicAccessBlock",
     {
         bucket: bucket.bucket,
-        blockPublicAcls: false, // required for public website hosting
+        blockPublicAcls: false,
     },
     { provider: escAwsProvider }
 );
 
-// -----------------------------------------------------------------------------
-// ⭐ Upload static website files using Synced Folder
-// -----------------------------------------------------------------------------
+// --------------------------------------------------------
+// 5️⃣ Synced folder (uploads static site)
+// --------------------------------------------------------
 const bucketFolder = new synced_folder.S3BucketFolder(
-    "bucket-folder",
+    "bucketFolder",
     {
         path: path,
         bucketName: bucket.bucket,
@@ -79,9 +71,9 @@ const bucketFolder = new synced_folder.S3BucketFolder(
     }
 );
 
-// -----------------------------------------------------------------------------
-// ⭐ CloudFront CDN
-// -----------------------------------------------------------------------------
+// --------------------------------------------------------
+// 6️⃣ CloudFront Distribution
+// --------------------------------------------------------
 const cdn = new aws.cloudfront.Distribution(
     "cdn",
     {
@@ -120,9 +112,7 @@ const cdn = new aws.cloudfront.Distribution(
             },
         ],
         restrictions: {
-            geoRestriction: {
-                restrictionType: "none",
-            },
+            geoRestriction: { restrictionType: "none" },
         },
         viewerCertificate: {
             cloudfrontDefaultCertificate: true,
@@ -131,11 +121,10 @@ const cdn = new aws.cloudfront.Distribution(
     { provider: escAwsProvider }
 );
 
-// -----------------------------------------------------------------------------
-// ⭐ Outputs
-// -----------------------------------------------------------------------------
-export const originURL = pulumi.interpolate`http://${bucketWebsite.websiteEndpoint}`;
+// --------------------------------------------------------
+// 7️⃣ Outputs
+// --------------------------------------------------------
 export const originHostname = bucketWebsite.websiteEndpoint;
-
-export const cdnURL = pulumi.interpolate`https://${cdn.domainName}`;
+export const originURL = pulumi.interpolate`http://${bucketWebsite.websiteEndpoint}`;
 export const cdnHostname = cdn.domainName;
+export const cdnURL = pulumi.interpolate`https://${cdn.domainName}`;
