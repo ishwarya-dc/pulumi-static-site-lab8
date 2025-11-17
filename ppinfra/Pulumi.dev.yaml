@@ -1,5 +1,3 @@
 config:
-  aws:region: us-west-2
-  myworkshop:errorDocument: error.html
-  myworkshop:indexDocument: index.html
-  myworkshop:path: ./www
+  aws:region: us-east-1
+  pulumi:environment: lab8-pulumi/aws-oidc-env
