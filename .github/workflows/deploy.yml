@@ -34,7 +34,7 @@ jobs:
         uses: pulumi/actions@v5
         with:
           command: up
-          stack-name: ishwarya-dc/myworkshop/dev
+          stack-name: ishwarya-dc-org/myworkshop/dev
           work-dir: ./ppinfra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
